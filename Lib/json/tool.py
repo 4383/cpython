@@ -29,6 +29,10 @@ def main():
     options = parser.parse_args()
 
     infile = options.infile or sys.stdin
+    try:
+        outfile = sys.stdout if options.outfile == '-' else open(options.outfile, 'w')
+    except IOError as e:
+        parser.print_help(e)
     sort_keys = options.sort_keys
     with infile:
         try:
@@ -36,7 +40,6 @@ def main():
         except ValueError as e:
             raise SystemExit(e)
 
-    outfile = sys.stdout if options.outfile == '-' else open(options.outfile, 'w')
     with outfile:
         json.dump(obj, outfile, sort_keys=sort_keys, indent=4)
         outfile.write('\n')
