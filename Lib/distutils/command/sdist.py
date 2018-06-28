@@ -96,7 +96,7 @@ class sdist(Command):
 
     sub_commands = [('check', checking_metadata)]
 
-    READMES = ('README', 'README.txt', 'README.rst')
+    READMES = ('README', 'README.txt', 'README.rst', 'README.md')
 
     def initialize_options(self):
         # 'template' and 'manifest' are, respectively, the names of

@@ -1030,6 +1030,7 @@ class DistributionMetadata:
                          "license", "description", "long_description",
                          "keywords", "platforms", "fullname", "contact",
                          "contact_email", "classifiers", "download_url",
+                         "long_description_content_type",
                          # PEP 314
                          "provides", "requires", "obsoletes",
                          )
@@ -1048,6 +1049,7 @@ class DistributionMetadata:
             self.license = None
             self.description = None
             self.long_description = None
+            self.long_description_content_type = None
             self.keywords = None
             self.platforms = None
             self.classifiers = None
@@ -1091,6 +1093,12 @@ class DistributionMetadata:
             self.download_url = None
 
         self.long_description = _read_field('description')
+
+        if 'description-content-type' in msg:
+            self.long_description_content_type = read_field(
+                'description-content-type')
+        else:
+            self.long_description_content_type = None
         self.description = _read_field('summary')
 
         if 'keywords' in msg:
@@ -1195,6 +1203,9 @@ class DistributionMetadata:
 
     def get_long_description(self):
         return self.long_description or "UNKNOWN"
+
+    def get_long_description_content_type(self):
+        return self.long_description_content_type or "UNKNOWN"
 
     def get_keywords(self):
         return self.keywords or []
